@@ -17,7 +17,7 @@ __plugin_meta__ = PluginMetadata(
 
 sleep = on_command(
     'sleep',
-    priority=0,
+    priority=1,
     block=False
 )
 
