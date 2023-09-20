@@ -32,14 +32,13 @@ async def _(bot: Bot, event: GroupMessageEvent, args: Message = CommandArg()):
                 await bot.set_group_ban(group_id=event.group_id, user_id=event.user_id, duration=28800)
         await sleep.finish(MessageSegment.reply(event.message_id) + '晚安~')
     else:
-        if sleep_time.isdigit():
-            sleep_time = math.ceil(float(sleep_time))
-            if sleep_time <= 1:
-                duration = 3600
-            elif 1 < sleep_time <= 24:
-                duration = int(sleep_time * 3600)
-            else:
-                duration = 86400
+        if sleep_time.replace('.', '').isdigit():
+            sleep_time = round(float(sleep_time))
+            if sleep_time < 1:
+                sleep_time = 1
+            elif sleep_time > 24:
+                sleep_time = 24
+            duration = int(sleep_time * 3600)
             if event.sender.role == 'member':
                 self_info = await bot.get_group_member_info(group_id=event.group_id, user_id=event.self_id, no_cache=True)
                 if self_info['role'] != 'member':
