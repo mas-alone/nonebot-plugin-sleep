@@ -27,7 +27,7 @@ async def _(bot: Bot, event: GroupMessageEvent, args: Message = CommandArg()):
     sleep_time = str(args).strip()
     if sleep_time == '':
         if event.sender.role == 'member':
-            self_info = await bot.get_group_member_info(group_id=event.group_id, user_id=event.self_id, no_cache=True)
+            self_info = await bot.get_group_member_info(group_id=event.group_id, user_id=event.self_id)
             if self_info['role'] != 'member':
                 await bot.set_group_ban(group_id=event.group_id, user_id=event.user_id, duration=28800)
         await sleep.finish(MessageSegment.reply(event.message_id) + '晚安~')
@@ -40,7 +40,7 @@ async def _(bot: Bot, event: GroupMessageEvent, args: Message = CommandArg()):
                 sleep_time = 24
             duration = int(sleep_time * 3600)
             if event.sender.role == 'member':
-                self_info = await bot.get_group_member_info(group_id=event.group_id, user_id=event.self_id, no_cache=True)
+                self_info = await bot.get_group_member_info(group_id=event.group_id, user_id=event.self_id)
                 if self_info['role'] != 'member':
                     await bot.set_group_ban(group_id=event.group_id, user_id=event.user_id, duration=duration)
             await sleep.finish(MessageSegment.reply(event.message_id) + '晚安~')
